@@ -13,6 +13,8 @@ RUN chown -R www-data:www-data /var/www/html/
 # Allow .htaccess to override settings and allow access
 RUN echo "<Directory /var/www/html/>" >> /etc/apache2/apache2.conf
 RUN echo "    AllowOverride All" >> /etc/apache2/apache2.conf
+RUN echo "    Order Deny,Allow" >> /etc/apache2/apache2.conf
+RUN echo "    Allow from all" >> /etc/apache2/apache2.conf
 RUN echo "    Require all granted" >> /etc/apache2/apache2.conf
 RUN echo "</Directory>" >> /etc/apache2/apache2.conf
 
