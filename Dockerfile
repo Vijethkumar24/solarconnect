@@ -9,6 +9,13 @@ RUN sed -i 's/<VirtualHost *:80>/<VirtualHost *:8080>/' /etc/apache2/sites-enabl
 
 # Fix file permissions to avoid "Forbidden" error
 RUN chown -R www-data:www-data /var/www/html/
+RUN chmod -R 755 /var/www/html/
+RUN echo "<Directory /var/www/html/>" >> /etc/apache2/apache2.conf
+RUN echo "    AllowOverride All" >> /etc/apache2/apache2.conf
+RUN echo "    Require all granted" >> /etc/apache2/apache2.conf
+RUN echo "</Directory>" >> /etc/apache2/apache2.conf
+RUN a2enmod rewrite
+
 
 # Expose the correct port
 EXPOSE 8080
