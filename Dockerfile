@@ -3,14 +3,12 @@ FROM php:apache
 # Set the ServerName to avoid warnings
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-# Allow Apache to listen on any assigned port dynamically
-RUN echo "Listen 8080" > /etc/apache2/ports.conf
+# Ensure Apache listens on the correct port (Railway uses 8080)
+RUN sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf
+RUN sed -i 's/<VirtualHost *:80>/<VirtualHost *:8080>/' /etc/apache2/sites-enabled/000-default.conf
 
-# Ensure Apache uses the Railway-assigned PORT
-RUN sed -i "s/VirtualHost \*:80/VirtualHost *:${PORT}/g" /etc/apache2/sites-available/000-default.conf
-
-# Expose Railway's dynamic port (8080)
+# Expose the correct port
 EXPOSE 8080
 
-# Start Apache
+# Start Apache in foreground
 CMD ["apachectl", "-D", "FOREGROUND"]
