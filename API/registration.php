@@ -1,15 +1,15 @@
 <?php
 require_once '../config/connection.php';
 
-$fname=$_POST['firstname'];
-$lname=$_POST['lastname'];
-$email=$_POST['emailaddress'];
-$user=$_POST['username'];
-$pass=$_POST['regpassword'];
-$add=$_POST['address'];
-$cont=$_POST['contact'];
-$pin=$_POST['pincode'];
-$city=$_POST['city'];
+$fname = $_POST['firstname'];
+$lname = $_POST['lastname'];
+$email = $_POST['emailaddress'];
+$user = $_POST['username'];
+$pass = $_POST['regpassword'];
+$add = $_POST['address'];
+$cont = $_POST['contact'];
+$pin = $_POST['pincode'];
+$city = $_POST['city'];
 
 // $fname="manisha";
 // $lname="salian";
@@ -23,14 +23,23 @@ $city=$_POST['city'];
 // $city="surathkal";
 
 
-    if(mysqli_query($conn, "INSERT INTO user (first_name,last_name,email,username,password,address,contact,date,pincode,city,status,type) VALUES('$fname','$lname','$email','$user','$pass','$add','$cont',NOW(),'$pin','$city',1,'User')")){
 
-        $response['success']=true;
-        $response['message']="User registered successfully";
-    } else{
-        $response['success']=false;
-        $response['message']="Unable to register user";
-    }
+$defaultImage = "default_image.jpg"; // Set a default image path
+
+$sql = "INSERT INTO user (first_name, last_name, email, username, password, image, address, contact, date, pincode, city, status, type)
+        VALUES ('$fname', '$lname', '$email', '$user', '$pass','$defaultImage', '$add', '$cont', NOW(), '$pin', '$city', 1, 'User')";
+
+if (mysqli_query($conn, $sql)) {
+    $response['success'] = true;
+    $response['message'] = "User registered successfully";
+    ;
+} else {
+    $response['success'] = false;
+    $response['message'] = "Unable to register user";
+}
+
+
+
 echo json_encode($response);
 
 
