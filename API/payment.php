@@ -68,14 +68,13 @@ if (mysqli_query($conn, $sql)) {
         }
 
         date_default_timezone_set('Asia/Kolkata');
-        $dateo = date('Y-m-d h:i:s a');
 
         $pyno = "PAY987" . $trid . "MM" . $trid;
 
         if (
             mysqli_query($conn, "INSERT INTO user_payment(payment_no, user_id, 
                 amount, payment_status, track_id, date)VALUES
-                ('$pyno', '$uid', '$amt', 'Success', '$trid', '$dateo')")
+                ('$pyno', '$uid', '$amt', 'Success', '$trid', NOW())")
         ) {
 
             $pyid = mysqli_insert_id($conn);
