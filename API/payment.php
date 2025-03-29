@@ -51,9 +51,11 @@ $trackno = "BBORD" . $uid . "TRC" . date("YmdHis");
 $trstatus = "Paid";
 $trremark = "Order has been begin";
 $trid = 0;
+date_default_timezone_set('Asia/Kolkata');
+$dateo = date('Y-m-d h:i:s A');
 
 $sql = "INSERT INTO trackorder (userid, trackno, status, remark, date) 
-        VALUES ('$uid', '$trackno', '$trstatus', '$trremark', NOW())";
+        VALUES ('$uid', '$trackno', '$trstatus', '$trremark', '$dateo')";
 
 if (mysqli_query($conn, $sql)) {
 
@@ -67,11 +69,11 @@ if (mysqli_query($conn, $sql)) {
             $trid = $row1["id"];
         }
 
-        date_default_timezone_set('Asia/Kolkata');
+
 
         $pyno = "PAY987" . $trid . "MM" . $trid;
         $sql2 = "INSERT INTO user_payment(payment_no, user_id, amount, payment_status, track_id, date) 
-        VALUES ('$pyno', '$uid', '$amt', 'Success', '$trid', NOW())";
+        VALUES ('$pyno', '$uid', '$amt', 'Success', '$trid', '$dateo')";
         if (
             mysqli_query($conn, $sql2)
         ) {
@@ -82,8 +84,7 @@ if (mysqli_query($conn, $sql)) {
                 $sql3 = "INSERT INTO orders (userid, trackid, productId, quantity, orderStatus, 
                             order_remark, orderDate, payment_id) 
         VALUES ('$uid', '$trid', '{$item['pid']}', '{$item['quantity']}', '$trstatus', 
-                '$trremark', NOW(), '$pyid')";
-
+                '$trremark', '$dateo', '$pyid')";
 
                 if (
                     mysqli_query($conn, $sql3)
