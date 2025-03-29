@@ -10,6 +10,8 @@ RUN sed -i 's/<VirtualHost *:80>/<VirtualHost *:8080>/' /etc/apache2/sites-enabl
 # Copy application files with correct ownership
 COPY --chown=www-data:www-data . /var/www/html/
 
+RUN docker-php-ext-install mysqli
+
 # Fix file permissions to avoid "Forbidden" error
 RUN chown -R www-data:www-data /var/www/html/ \
     && chmod -R 755 /var/www/html/
