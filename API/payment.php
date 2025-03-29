@@ -86,7 +86,7 @@ if (mysqli_query($conn, $sql)) {
                             productId,quantity, orderStatus, 
                             order_remark, orderDate, payment_id) values('" . $uid .
                         "','$trid','$item[pid]','$item[quantity]','$trstatus',
-                            '$trremark','$dateo', '$pyid')")
+                            '$trremark',NOW(), '$pyid')")
                 ) {
 
                     $responce['success'] = true;
