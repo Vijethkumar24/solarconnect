@@ -115,10 +115,4 @@ if (mysqli_query($conn, $sql)) {
     $responce['success'] = false;
     $responce['message'] = "Oops, Unable to process..!";
 }
-
-
-
-
-
-
 echo json_encode($responce);
