@@ -2,11 +2,6 @@
 session_start();
 require_once '../config/connection.php'; // Ensure correct database connection
 
-// Ensure user is logged in
-if (!isset($_SESSION['login'])) {
-    header("Location: login.php");
-    exit();
-}
 
 // Check if form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
