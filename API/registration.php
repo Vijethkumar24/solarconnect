@@ -27,8 +27,9 @@ $city = $_POST['city'];
 $defaultImage = "default_image.jpg"; // Set a default image path
 $designation = "User";
 $add2 = "India";
-$sql = "INSERT INTO user (first_name, last_name, email, username, password, image, address, contact,designation,address2, date, pincode, city, status, type)
-        VALUES ('$fname', '$lname', '$email', '$user', '$pass','$defaultImage', '$add', '$cont','$designation', '$add2', NOW(), '$pin', '$city', 1, 'User')";
+$state = "KAR";
+$sql = "INSERT INTO user (first_name, last_name, email, username, password, image, address, contact,designation,address2,state, date, pincode, city, status, type)
+        VALUES ('$fname', '$lname', '$email', '$user', '$pass','$defaultImage', '$add', '$cont','$designation', '$add2', '$state', NOW(), '$pin', '$city', 1, 'User')";
 
 if (mysqli_query($conn, $sql)) {
     $response['success'] = true;
