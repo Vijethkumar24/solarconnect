@@ -1,12 +1,14 @@
 <?php
-$host = $_ENV['MYSQLHOST'] ?? 'localhost';
-$port = (int) ($_ENV['MYSQLPORT'] ?? 3306);
-$username = $_ENV['MYSQLUSER'] ?? 'root';
-$password = $_ENV['MYSQLPASSWORD'] ?? '';
-$database = $_ENV['MYSQLDATABASE'] ?? 'test_db';
-
+$host = $_ENV['MYSQLHOST'];
+$port = (int) $_ENV['MYSQLPORT'];
+$username = $_ENV['MYSQLUSER'];
+$password = $_ENV['MYSQLPASSWORD'];
+$database = $_ENV['MYSQLDATABASE'];
 
 $conn = mysqli_connect($host, $username, $password, $database, $port);
+
+
+
 
 if (!$conn) {
     die("Unable to connect database : " . mysqli_connect_error());
