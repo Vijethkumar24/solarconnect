@@ -1,9 +1,10 @@
 <?php
-$host = "mysql.railway.internal";  // Railway MySQL Host
-$port = 3306;                 // Railway MySQL Port
-$username = "root";               // Railway MySQL Username
-$password = "SGkaAIcqtrRTCGkuRAZTngQRDhLvAEgK"; // Railway MySQL Password
-$database = "railway";
+$host = getenv('MYSQLHOST');
+$port = (int) getenv('MYSQLPORT');
+$username = getenv('MYSQLUSER');
+$password = getenv('MYSQLPASSWORD');
+$database = getenv('MYSQLDATABASE');
+
 $conn = mysqli_connect($host, $username, $password, $database, $port);
 
 if (!$conn) {
