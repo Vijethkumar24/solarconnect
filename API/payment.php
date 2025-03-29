@@ -52,8 +52,8 @@ $trstatus = "Paid";
 $trremark = "Order has been begin";
 $trid = 0;
 
-$sql = "INSERT INTO trackorder (userid, trackno, status, remark) 
-        VALUES ('" . $uid . "','$trackno','$trstatus','$trremark')";
+$sql = "INSERT INTO trackorder (userid, trackno, status, remark,date) 
+        VALUES ('" . $uid . "','$trackno','$trstatus','$trremark','NOW()')";
 
 if (mysqli_query($conn, $sql)) {
 
