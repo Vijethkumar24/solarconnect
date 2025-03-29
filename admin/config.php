@@ -1,9 +1,9 @@
 <?php
-$host = $_ENV['MYSQLHOST'];
-$port = (int) $_ENV['MYSQLPORT'];
-$username = $_ENV['MYSQLUSER'];
-$password = $_ENV['MYSQLPASSWORD'];
-$database = $_ENV['MYSQLDATABASE'];
+$host = getenv('MYSQLHOST');
+$port = (int) getenv('MYSQLPORT');
+$username = getenv('MYSQLUSER');
+$password = getenv('MYSQLPASSWORD');
+$database = getenv('MYSQLDATABASE');
 $conn = mysqli_connect($host, $username, $password, $database, $port);
 if (!$conn) {
     die("Unable to connect database : " . mysqli_connect_error());
