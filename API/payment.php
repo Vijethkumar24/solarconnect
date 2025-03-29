@@ -80,8 +80,11 @@ if (mysqli_query($conn, $sql)) {
             $pyid = mysqli_insert_id($conn);
 
             foreach ($data as $item) {
-                $sql = "INSERT INTO trackorder (userid, trackno, status, remark, date) 
-                VALUES ('$uid', '$trackno', '$trstatus', '$trremark', NOW())";
+                $sql = "INSERT INTO orders (userid, trackid, productId, quantity, orderStatus, 
+                            order_remark, orderDate, payment_id) 
+        VALUES ('$uid', '$trid', '{$item['pid']}', '{$item['quantity']}', '$trstatus', 
+                '$trremark', NOW(), '$pyid')";
+
 
                 if (
                     mysqli_query($conn, $sql)
