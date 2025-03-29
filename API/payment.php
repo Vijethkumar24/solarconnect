@@ -52,8 +52,8 @@ $trstatus = "Paid";
 $trremark = "Order has been begin";
 $trid = 0;
 
-$sql = "INSERT INTO trackorder (userid, trackno, status, remark,date) 
-        VALUES ('" . $uid . "','$trackno','$trstatus','$trremark','NOW()')";
+$sql = "INSERT INTO trackorder (userid, trackno, status, remark, date) 
+        VALUES ('$uid', '$trackno', '$trstatus', '$trremark', NOW())";
 
 if (mysqli_query($conn, $sql)) {
 
@@ -70,24 +70,23 @@ if (mysqli_query($conn, $sql)) {
         date_default_timezone_set('Asia/Kolkata');
 
         $pyno = "PAY987" . $trid . "MM" . $trid;
-
+        $sql2 = "INSERT INTO user_payment(payment_no, user_id, amount, payment_status, track_id, date) 
+        VALUES ('$pyno', '$uid', '$amt', 'Success', '$trid', NOW())";
         if (
-            mysqli_query($conn, "INSERT INTO user_payment(payment_no, user_id, 
-                amount, payment_status, track_id, date)VALUES
-                ('$pyno', '$uid', '$amt', 'Success', '$trid', NOW())")
+            mysqli_query($conn, $sql2)
         ) {
 
             $pyid = mysqli_insert_id($conn);
 
             foreach ($data as $item) {
-                $sql = "INSERT INTO orders (userid, trackid, productId, quantity, orderStatus, 
+                $sql3 = "INSERT INTO orders (userid, trackid, productId, quantity, orderStatus, 
                             order_remark, orderDate, payment_id) 
         VALUES ('$uid', '$trid', '{$item['pid']}', '{$item['quantity']}', '$trstatus', 
                 '$trremark', NOW(), '$pyid')";
 
 
                 if (
-                    mysqli_query($conn, $sql)
+                    mysqli_query($conn, $sql3)
                 ) {
 
                     $responce['success'] = true;
