@@ -68,7 +68,7 @@ if (mysqli_query($conn, $sql)) {
         }
 
         date_default_timezone_set('Asia/Kolkata');
-        $dateo = date('Y-m-d h:i:s a');
+        $dateo = date('Y-m-d h:i:s');
 
         $pyno = "PAY987" . $trid . "MM" . $trid;
 
