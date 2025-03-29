@@ -80,13 +80,11 @@ if (mysqli_query($conn, $sql)) {
             $pyid = mysqli_insert_id($conn);
 
             foreach ($data as $item) {
+                $sql = "INSERT INTO trackorder (userid, trackno, status, remark, date) 
+                VALUES ('$uid', '$trackno', '$trstatus', '$trremark', NOW())";
 
                 if (
-                    mysqli_query($conn, "insert into orders(userid,trackid,
-                            productId,quantity, orderStatus, 
-                            order_remark, orderDate, payment_id) values('" . $uid .
-                        "','$trid','$item[pid]','$item[quantity]','$trstatus',
-                            '$trremark',NOW(), '$pyid')")
+                    mysqli_query($conn, $sql)
                 ) {
 
                     $responce['success'] = true;
