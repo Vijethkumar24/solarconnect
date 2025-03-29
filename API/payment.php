@@ -52,7 +52,7 @@ $trstatus = "Paid";
 $trremark = "Order has been begin";
 $trid = 0;
 date_default_timezone_set('Asia/Kolkata');
-$dateo = date('Y-m-d h:i:s A');
+$dateo = date('Y-m-d h:i:s a');
 
 $sql = "INSERT INTO trackorder (userid, trackno, status, remark, date) 
         VALUES ('$uid', '$trackno', '$trstatus', '$trremark', '$dateo')";
