@@ -1,12 +1,19 @@
 <?php
 require_once '../config/connection.php';
+session_start();
 
+if (isset($_SESSION['user_id'])) {
+    $id = $_SESSION['user_id'];
+}
 $response = array();
-$id = 21;
-// $id = $_POST['uid'];
 
-$qry = "select DISTINCT trackid, orderDate, orderStatus 
-    from orders where userid = '$id' ORDER BY id DESC";
+
+$qry = "SELECT trackid, orderDate, orderStatus 
+        FROM orders 
+        WHERE userid = '$id' 
+        GROUP BY trackid, orderDate, orderStatus 
+        ORDER BY MAX(id) DESC";
+
 
 $res = mysqli_query($conn, $qry);
 if (mysqli_num_rows($res) > 0) {
