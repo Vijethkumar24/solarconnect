@@ -15,9 +15,6 @@ if (mysqli_num_rows($login) > 0) {
     $response['success'] = true;
     $_SESSION['user_id'] = $row['id'];
 
-    // Debugging: Log session data
-    error_log("Session started. Session data: " . print_r($_SESSION, true));
-
     $response['id'] = $row['id'];
     $response['message'] = "You have Logged in Successfully";
 } else {

@@ -5,15 +5,7 @@ require_once '../config/connection.php';
 $response = array();
 
 // Debugging: Log session data
-error_log("Session data: " . print_r($_SESSION, true));
-
-// Ensure user ID is retrieved from session
-if (!isset($_SESSION['user_id'])) {
-    error_log("User not logged in. Session user_id is not set.");
-    echo json_encode(["error" => "User not logged in"]);
-    exit;
-}
-$id = $_SESSION['user_id'];
+$id = $_POST['uid'];
 
 // Use prepared statements for the main query
 $qry = "SELECT trackid, orderDate, orderStatus 
