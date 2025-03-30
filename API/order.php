@@ -2,8 +2,10 @@
 session_start();
 require_once '../config/connection.php';
 
+var_dump($_SESSION);
 
-$id = $_POST['id'];
+$id = $_SESSION['user_id'];
+$id = 2;
 $response = array();
 
 
