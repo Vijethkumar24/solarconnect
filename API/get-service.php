@@ -15,8 +15,9 @@ if (mysqli_num_rows($res) > 0) {
         $send["product"] = $rows['pname'];
         $send["number"] = $rows['service_no'];
         $send["problem"] = $rows['problem'];
+        $send["amount"] = number_format((float) ($rows['amount'] ?? 0.0), 2);
 
-        $send["amount"] = number_format((float) ($rows['amount'] ?? 0), 2);
+
         if ($rows['status']) {
             $send["status"] = 'Active';
         } else {
