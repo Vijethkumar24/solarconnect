@@ -2,34 +2,51 @@
 session_start();
 require_once '../config/connection.php';
 
-var_dump($_SESSION);
-
-$id = $_SESSION['user_id'];
-$id = 2;
 $response = array();
 
+// Ensure user ID is retrieved from session
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(["error" => "User not logged in"]);
+    exit;
+}
+$id = $_SESSION['user_id'];
 
+// Use prepared statements for the main query
 $qry = "SELECT trackid, orderDate, orderStatus 
         FROM orders 
-        WHERE userid = '$id' 
+        WHERE userid = ? 
         GROUP BY trackid, orderDate, orderStatus 
         ORDER BY MAX(id) DESC";
 
+$stmt = $conn->prepare($qry);
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$res = $stmt->get_result();
 
-$res = mysqli_query($conn, $qry);
-if (mysqli_num_rows($res) > 0) {
-    while ($row2 = mysqli_fetch_assoc($res)) {
-
+if ($res->num_rows > 0) {
+    while ($row2 = $res->fetch_assoc()) {
         $trackid = $row2['trackid'];
-        $sql3 = "select Trackno from trackorder where id = '$trackid'";
-        $res3 = mysqli_query($conn, $sql3);
-        $row3 = mysqli_fetch_assoc($res3);
 
-        $sqlamt = "SELECT product.price,  orders.quantity FROM product join orders on product.id=orders.productId where orders.trackid='$trackid'";
-        $resamt = mysqli_query($conn, $sqlamt);
+        // Use prepared statements for track order query
+        $sql3 = "SELECT Trackno FROM trackorder WHERE id = ?";
+        $stmt3 = $conn->prepare($sql3);
+        $stmt3->bind_param("i", $trackid);
+        $stmt3->execute();
+        $res3 = $stmt3->get_result();
+        $row3 = $res3->fetch_assoc();
+
+        // Use prepared statements for product and order details
+        $sqlamt = "SELECT product.price, orders.quantity 
+                   FROM product 
+                   JOIN orders ON product.id = orders.productId 
+                   WHERE orders.trackid = ?";
+        $stmtAmt = $conn->prepare($sqlamt);
+        $stmtAmt->bind_param("i", $trackid);
+        $stmtAmt->execute();
+        $resamt = $stmtAmt->get_result();
+
         $totalprice = 0;
-        while ($rowamt = mysqli_fetch_assoc($resamt)) {
-
+        while ($rowamt = $resamt->fetch_assoc()) {
             $subtotal = $rowamt['quantity'] * $rowamt['price'];
             $totalprice += $subtotal;
         }
@@ -40,19 +57,25 @@ if (mysqli_num_rows($res) > 0) {
         $send["status"] = $row2['orderStatus'];
         $send["date"] = date_format(date_create($row2['orderDate']), 'd, M Y');
 
-        $sql = "select first_name,last_name, contact, address, address2, state, city, pincode from user where id = '" . $id . "'";
-        $res = mysqli_query($conn, $sql);
-
-        $row = mysqli_fetch_assoc($res);
+        // Use prepared statements for user details
+        $sql = "SELECT first_name, last_name, contact, address, address2, state, city, pincode 
+                FROM user 
+                WHERE id = ?";
+        $stmtUser = $conn->prepare($sql);
+        $stmtUser->bind_param("i", $id);
+        $stmtUser->execute();
+        $resUser = $stmtUser->get_result();
+        $row = $resUser->fetch_assoc();
 
         $send["name"] = $row['first_name'] . " " . $row['last_name'];
         $send["contact"] = $row['contact'];
         $send["address"] = $row['address'] . ", " . $row['address2'] . ", " . $row['state'] . ", " . $row['city'] . " PIN: " . $row['pincode'];
-
 
         array_push($response, $send);
     }
 } else {
     $response = null;
 }
-echo (json_encode($response));
+
+echo json_encode($response);
+?>
