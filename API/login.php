@@ -15,12 +15,8 @@ if (mysqli_num_rows($login) > 0) {
     $response['success'] = true;
     $_SESSION['user_id'] = $row['id'];
 
-    // Debugging: Check if session is set
-    if (isset($_SESSION['user_id'])) {
-        error_log("Session user_id set to: " . $_SESSION['user_id']);
-    } else {
-        error_log("Failed to set session user_id.");
-    }
+    // Debugging: Log session data
+    error_log("Session started. Session data: " . print_r($_SESSION, true));
 
     $response['id'] = $row['id'];
     $response['message'] = "You have Logged in Successfully";
