@@ -49,8 +49,7 @@ if ($res->num_rows > 0) {
 
         $send["trackid"] = $row2['trackid'];
         $send["number"] = $row3['Trackno'];
-        $send["amount"] = number_format((float) ($totalprice ?? 0), 2);
-        // Ensure $totalprice is not null
+        $send["amount"] = number_format($totalprice, 2);
         $send["status"] = $row2['orderStatus'];
         $send["date"] = date_format(date_create($row2['orderDate']), 'd, M Y');
 
