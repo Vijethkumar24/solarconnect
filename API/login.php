@@ -1,6 +1,7 @@
 <?php
+session_start();
 require_once '../config/connection.php';
-session_start(); // Start session
+// Start session
 $user = $_POST['username'];
 $pass = $_POST['lgpassword'];
 
