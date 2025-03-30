@@ -1,8 +1,9 @@
 <?php
+session_start();
 require_once 'include/header-ink.php';
 include 'config/connection.php';
 
-session_start();
+
 
 if (!empty($_SESSION['login'])) {
     header("Location: index.php");

@@ -2,13 +2,8 @@
 session_start();
 require_once '../config/connection.php';
 
-var_dump($_SESSION);
-if (!isset($_SESSION['user_id'])) {
-    echo json_encode(["error" => "User not logged in"]);
-    exit;
-}
 
-$id = $_SESSION['user_id'];
+$id = $_POST['id'];
 $response = array();
 
 

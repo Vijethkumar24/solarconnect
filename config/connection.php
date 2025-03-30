@@ -9,8 +9,6 @@ $database = getenv('DB_DATABASE');
 $conn = mysqli_connect($host, $username, $password, $database, $port);
 
 
-
-
 if (!$conn) {
     die("Unable to connect database : " . mysqli_connect_error());
 }
